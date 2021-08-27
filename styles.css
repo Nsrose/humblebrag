@@ -1,5 +1,22 @@
 .bragging-div {
+	margin-left:auto;
+	margin-right:auto;
+	width:400px;
+	margin-bottom: 20px;
+}
+.bragging-label {
 	text-align:center;
 	font-weight: bold;
+	font-size:1.5em;
 	color:red;
 }
+.feedback-cta {
+	text-align:center;
+	font-size:1em;
+}
+/*.feedback-cta:hover {
+	text-decoration: underline;
+	color:blue;
+	cursor: pointer;
+}
+*/
