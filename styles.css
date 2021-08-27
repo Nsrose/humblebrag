@@ -10,13 +10,17 @@
 	font-size:1.5em;
 	color:red;
 }
+
+.hidden {
+	display: none;
+}
+
 .feedback-cta {
 	text-align:center;
 	font-size:1em;
 }
-/*.feedback-cta:hover {
+.feedback-cta:hover {
 	text-decoration: underline;
 	color:blue;
 	cursor: pointer;
 }
-*/

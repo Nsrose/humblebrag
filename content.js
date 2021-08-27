@@ -50,6 +50,7 @@ var labelPosts = function() {
 				$(div).find(".custom-select").attr("id", "custom-select-" + i);
 				$(div).find(".btn").attr("id", "bragging-submit-" + i);
 				$(div).find(".bragging-feedback-form").attr("id", "bragging-feedback-form-" + i);
+				$(div).find(".feedback-cta").attr("id", "feedback-cta-" + i);
 
 				// add functions
 				$("#bragging-submit-" + i).click(function(data) {
@@ -64,7 +65,23 @@ var labelPosts = function() {
 					// TODO: send this to API
 					console.log(selectedValue);
 					console.log(text);
-				})
+				});
+
+				$("#feedback-cta-" + i).click(function() {
+					$("#bragging-container-" + i).find(".bragging-feedback").removeClass("hidden");
+				});
+
+
+				// Show the predicted label
+				var texts = post.getElementsByClassName("break-words");
+				if (texts.length > 0) {
+					var text = texts[0].innerText;
+					if (detectBragging(text)) {
+						$("#bragging-container-" + i).find(".bragging-label-true").removeClass("hidden");
+					} else {
+						$("#bragging-container-" + i).find(".bragging-label-false").removeClass("hidden");
+					}
+				}
 
 				// don't do this again
 				labelledPosts.add(i);
