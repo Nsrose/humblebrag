@@ -3,7 +3,9 @@ var braggingWords = [
 	"proud",
 	"accomplished",
 	"excited",
-	"announce"
+	"announce",
+	"honored",
+	"fortunate",
 ]
 
 
