@@ -86,7 +86,6 @@ var labelPosts = function() {
 	var posts = $(".feed-shared-update-v2__description-wrapper");
 
 
-	// attempt 2 
 	for (let i = 0; i < posts.length; i++) {
 		var post = posts[i];
 		if (!attachedPosts.has(i)) {
@@ -109,6 +108,7 @@ var labelPosts = function() {
 				$(div).find(".btn").attr("id", "bragging-submit-" + i);
 				$(div).find(".bragging-feedback-form").attr("id", "bragging-feedback-form-" + i);
 				$(div).find(".feedback-cta").attr("id", "feedback-cta-" + i);
+				$(div).find(".feedback-confirmed").attr("id", "feedback-confirmed-" + i);
 
 				// add functions
 				$("#bragging-submit-" + i).click(function(data) {
@@ -121,6 +121,10 @@ var labelPosts = function() {
 					}
 
 					getClientAndSendData(selectedValue, text);
+					// hide the feedback form now
+					$("#bragging-container-" + i).find(".bragging-feedback").addClass("hidden");
+					$("#feedback-cta-" + i).addClass("hidden");
+					$("#feedback-confirmed-" + i).removeClass("hidden");
 				});
 
 				$("#feedback-cta-" + i).click(function() {
