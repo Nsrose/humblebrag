@@ -6,7 +6,9 @@ var braggingWords = [
 	"announce",
 	"honored",
 	"fortunate",
-]
+];
+
+var API_URL = 'https://humblebrag-1b57a-default-rtdb.firebaseio.com/LabelledData.json';
 
 
 var detectBragging = function (text) {
@@ -22,6 +24,60 @@ var detectBragging = function (text) {
 
 var attachedPosts = new Set();
 var labelledPosts = new Set();
+
+
+
+function getRandomToken() {
+    var randomPool = new Uint8Array(32);
+    crypto.getRandomValues(randomPool);
+    var hex = '';
+    for (var i = 0; i < randomPool.length; ++i) {
+        hex += randomPool[i].toString(16);
+    }
+    return hex;
+}
+
+
+function sendLabelledData(clientID, selectedValue, text) {
+	var data = JSON.stringify({
+		"clientID": clientID,
+		"label" : parseInt(selectedValue),
+		"text" : text
+	})
+
+	$.ajax({
+		type: "POST",
+		url: API_URL,
+		data: data,
+		success: function(data, status) {
+			console.log(status);
+		}
+	})
+
+}
+
+
+
+var getClientAndSendData = function(selectedValue, text) {
+	
+	//TODO fix this part to get a real ClientID that persists in local storage and replace this line:
+	sendLabelledData(getRandomToken(), selectedValue, text);
+
+
+	// chrome.storage.sync.get('userid', function(items) {
+ //    var userid = items.userid;
+	//     if (userid) {
+	//         sendLabelledData(userid);
+	//     } else {
+	//         userid = getRandomToken();
+	//         chrome.storage.sync.set({userid: userid}, function() {
+	//             sendLabelledData(userid);
+	//         });
+	//     };
+	//     sendLabelledData(userid, selectedValue, text);
+	// });
+}
+
 
 
 
@@ -64,9 +120,7 @@ var labelPosts = function() {
 						text = texts[0].innerText;
 					}
 
-					// TODO: send this to API
-					console.log(selectedValue);
-					console.log(text);
+					getClientAndSendData(selectedValue, text);
 				});
 
 				$("#feedback-cta-" + i).click(function() {
