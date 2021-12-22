@@ -10,6 +10,7 @@
   }
 ],
    "web_accessible_resources": [
-    "braggingElement.html"
+    "braggingElement.html",
+    "bragging-icon.jpeg"
   ]
 }
