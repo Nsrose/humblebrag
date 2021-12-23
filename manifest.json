@@ -1,5 +1,5 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
   "name": "HumbleBrag",
   "version": "0.2",
   "content_scripts": [
@@ -9,8 +9,11 @@
     "css": ["styles.css", "bootstrap.min.css"]
   }
 ],
-   "web_accessible_resources": [
-    "braggingElement.html",
-    "bragging-icon.jpeg"
-  ]
+   "web_accessible_resources": [{
+    "resources": ["braggingElement.html",
+      "bragging-icon.jpeg"],
+  "matches": ["https://www.linkedin.com/*"],
+  "extension_ids": []
+   
+  }]
 }
