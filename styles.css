@@ -8,7 +8,7 @@
 	text-align:center;
 	font-weight: bold;
 	font-size:1.5em;
-	color:red;
+	color:#ec4840;
 }
 
 .hidden {
@@ -23,6 +23,9 @@
 	text-decoration: underline;
 	color:blue;
 	cursor: pointer;
+}
+.feedback-confirmed {
+	color: #006cff;
 }
 .bragging-feedback-select {
 	height:40px;
