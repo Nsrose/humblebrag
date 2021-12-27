@@ -45,3 +45,37 @@
     border-radius: 0.25rem;
 
 }
+
+.reality-check-container {
+	margin-left: 5px;
+	margin-right: 5px;
+	margin-bottom: 5px;
+}
+
+.reality-check-feedback {
+	margin-bottom:10px;
+	font-size:0.7em;
+}
+.reality-check-label-true {
+	color:#ec4840;
+}
+.reality-check-label-false {
+	color:#006cff;
+}
+.feedback-element {
+	font-size: 0.7em;
+	cursor: pointer;
+	float:left;
+	margin-right: 10px;
+}
+.feedback-element:hover {
+	text-decoration: underline;
+}
+.feedback-element-thanks {
+	font-size:0.7em;
+	float:left;
+}
+
+.clear {
+	clear: both;
+}
