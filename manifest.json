@@ -1,17 +1,18 @@
 {
   "manifest_version": 3,
   "name": "HumbleBrag",
-  "version": "0.2",
+  "version": "0.3",
   "content_scripts": [
   {
     "matches": ["https://www.linkedin.com/*"],
     "js": ["jquery-3.6.0.min.js", "content.js", "bootstrap.min.js"],
     "css": ["styles.css", "bootstrap.min.css"]
   }
-],
+  ],
    "web_accessible_resources": [{
     "resources": ["braggingElement.html",
-      "bragging-icon.jpeg"],
+      "bragging-icon.jpeg",
+      "reality_check.html"],
   "matches": ["https://www.linkedin.com/*"],
   "extension_ids": []
    

@@ -1,3 +1,5 @@
+var API_URL = 'https://humblebrag-1b57a-default-rtdb.firebaseio.com/LabelledData.json';
+
 var braggingWords = [
 	"humbled",
 	"proud",
@@ -6,9 +8,17 @@ var braggingWords = [
 	"announce",
 	"honored",
 	"fortunate",
+	"thrilled",
 ];
 
-var API_URL = 'https://humblebrag-1b57a-default-rtdb.firebaseio.com/LabelledData.json';
+var sellingWords = [
+	"comment below",
+	"share this post",
+	"sign up",
+	"link below"
+];
+
+
 
 
 var detectBragging = function (text) {
@@ -52,6 +62,7 @@ function sendLabelledData(clientID, selectedValue, text) {
 	})
 
 }
+
 
 
 
