@@ -110,7 +110,7 @@ var labelPosts = function() {
 			var post = posts[i];
 
 			// first check if we already put a label on this post 
-			if ($(post).find("#reality-check-container-" + i).length == 0) {
+			if ($(post).find(".reality-check-container").length == 0) {
 				var newDiv = document.createElement("div");
 				newDiv.setAttribute("id", "reality-check-container-" + i);
 				post.prepend(newDiv);
