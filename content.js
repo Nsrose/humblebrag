@@ -56,12 +56,13 @@ function getRandomToken() {
 }
 
 
-function sendLabelledData(clientID, text, feedbackType, feedbackLabel) {
+function sendLabelledData(clientID, text, feedbackType, feedbackLabel, extensionLabel) {
 	var data = JSON.stringify({
 		"clientID": clientID,
 		"label" : parseInt(feedbackLabel),
 		"text" : text,
-		"feedbackType": feedbackType
+		"feedbackType": feedbackType,
+		"extensionLabel" : extensionLabel
 	})
 
 	$.ajax({
@@ -78,10 +79,10 @@ function sendLabelledData(clientID, text, feedbackType, feedbackLabel) {
 
 
 
-var getClientAndSendData = function(text, feedbackType, feedbackLabel) {
+var getClientAndSendData = function(text, feedbackType, feedbackLabel, extensionLabel) {
 	
 	//TODO fix this part to get a real ClientID that persists in local storage and replace this line:
-	sendLabelledData(getRandomToken(), text, feedbackType, feedbackLabel);
+	sendLabelledData(getRandomToken(), text, feedbackType, feedbackLabel, extensionLabel);
 
 
 	// chrome.storage.sync.get('userid', function(items) {
@@ -140,9 +141,20 @@ var labelPosts = function() {
 
 					if (parentRealityItem.classList.contains("bragging-container")) {
 						feedbackType = "bragging";
+						
 					} else if (parentRealityItem.classList.contains("selling-container")) {
 						feedbackType = "selling";
 					}
+
+					// What did the Extension label this as?
+					var extensionLabel = null;
+					if (!$(parentRealityItem).find(".reality-check-label-true")[0].classList.contains("hidden")) {
+						extensionLabel = true;
+					} else {
+						extensionLabel = false;
+					}
+
+
 
 					// Tell if it was accurate or not
 					var feedbackLabel = 0;
@@ -152,7 +164,7 @@ var labelPosts = function() {
 						feedbackLabel = 1;
 					}
 
-					getClientAndSendData(text, feedbackType, feedbackLabel);
+					getClientAndSendData(text, feedbackType, feedbackLabel, extensionLabel);
 
 					var feedbackRow = data.currentTarget.closest(".feedback-row");
 					$(feedbackRow).find(".feedback-element-thanks").removeClass("hidden");
