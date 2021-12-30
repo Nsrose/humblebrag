@@ -45,6 +45,14 @@
     border-radius: 0.25rem;
 
 }
+.reality-check-title {
+	font-weight: bold;
+	font-size: 1.2em;
+}
+
+.reality-check-info {
+	font-weight: bold;
+}
 
 .reality-check-container {
 	margin-left: 5px;
@@ -62,6 +70,7 @@
 .reality-check-label-false {
 	color:#006cff;
 }
+
 .feedback-element {
 	font-size: 0.7em;
 	cursor: pointer;
