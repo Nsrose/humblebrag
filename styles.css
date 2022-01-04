@@ -88,3 +88,22 @@
 .clear {
 	clear: both;
 }
+
+.reveal-button {
+	margin-top:10px;
+    font-size: 0.8em;
+}
+.reveal-button:hover {
+	cursor: pointer;
+	text-decoration: underline;
+}
+
+.hide-button {
+	margin-top:10px;
+    font-size: 0.8em;
+}
+.hide-button:hover {
+	cursor: pointer;
+	text-decoration: underline;
+}
+

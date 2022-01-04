@@ -9,6 +9,8 @@ var braggingWords = [
 	"honored",
 	"fortunate",
 	"thrilled",
+	"new role",
+	"✅",
 ];
 
 var sellingWords = [
@@ -100,6 +102,26 @@ var getClientAndSendData = function(text, feedbackType, feedbackLabel, extension
 }
 
 
+function revealHideButtons(post) {
+	var body = $(post).find(".break-words");
+	body.css("filter", "blur(4px)");
+
+	$(post).find(".reveal-button").removeClass("hidden");
+	$(post).find(".reveal-button").unbind().click(function(data) {
+		var post= data.currentTarget.closest(".feed-shared-update-v2__description-wrapper")
+		$(post).find(".break-words").css("filter", "blur(0)")
+		$(this).addClass("hidden");
+		$(post).find(".hide-button").removeClass("hidden");
+	})
+	$(post).find('.hide-button').unbind().click(function(data) {
+		var post= data.currentTarget.closest(".feed-shared-update-v2__description-wrapper")
+		$(post).find(".break-words").css("filter", "blur(4px)")
+		$(this).addClass("hidden");
+		$(post).find(".reveal-button").removeClass("hidden");
+	})
+
+}
+
 
 
 
@@ -177,19 +199,28 @@ var labelPosts = function() {
 
 				// Show the predicted labels for each type
 				var texts = post.getElementsByClassName("break-words");
+
 				if (texts.length > 0) {
 					var text = texts[0].innerText;
+					
 					if (detectBragging(text)) {
 						$("#bragging-container-" + i).find(".bragging-label-true").removeClass("hidden");
+						revealHideButtons(post);
+						
 					} else {
 						$("#bragging-container-" + i).find(".bragging-label-false").removeClass("hidden");
 					}
 
 					if (detectSelling(text)) {
 						$("#selling-container-" + i).find(".selling-label-true").removeClass("hidden");
+						revealHideButtons(post);
 					} else {
 						$("#selling-container-" + i).find(".selling-label-false").removeClass("hidden");
 					}
+
+					
+					
+
 				}
 			}
 
