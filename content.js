@@ -102,20 +102,38 @@ var getClientAndSendData = function(text, feedbackType, feedbackLabel, extension
 }
 
 
+function showOrHideImageVideo(post, show) {
+	var postContainer = post.closest(".occludable-update");
+	var imageOrVideo = $(postContainer).find(".feed-shared-update-v2__content");
+	if (imageOrVideo.length > 0) {
+		if (show) {
+			imageOrVideo.css("filter", "blur(0px)");	
+		} else {
+			imageOrVideo.css("filter", "blur(8px)");
+		}
+		
+	}
+}
+
 function revealHideButtons(post) {
 	var body = $(post).find(".break-words");
 	body.css("filter", "blur(4px)");
 
+	// also hide any attached videos or images
+	showOrHideImageVideo(post, false);
+
 	$(post).find(".reveal-button").removeClass("hidden");
 	$(post).find(".reveal-button").unbind().click(function(data) {
 		var post= data.currentTarget.closest(".feed-shared-update-v2__description-wrapper")
-		$(post).find(".break-words").css("filter", "blur(0)")
+		$(post).find(".break-words").css("filter", "blur(0)");
+		showOrHideImageVideo(post, true);
 		$(this).addClass("hidden");
 		$(post).find(".hide-button").removeClass("hidden");
 	})
 	$(post).find('.hide-button').unbind().click(function(data) {
 		var post= data.currentTarget.closest(".feed-shared-update-v2__description-wrapper")
 		$(post).find(".break-words").css("filter", "blur(4px)")
+		showOrHideImageVideo(post, false);
 		$(this).addClass("hidden");
 		$(post).find(".reveal-button").removeClass("hidden");
 	})
@@ -200,6 +218,8 @@ var labelPosts = function() {
 				// Show the predicted labels for each type
 				var texts = post.getElementsByClassName("break-words");
 
+
+
 				if (texts.length > 0) {
 					var text = texts[0].innerText;
 					
@@ -215,7 +235,16 @@ var labelPosts = function() {
 						$("#selling-container-" + i).find(".selling-label-true").removeClass("hidden");
 						revealHideButtons(post);
 					} else {
-						$("#selling-container-" + i).find(".selling-label-false").removeClass("hidden");
+						// Check if this is an ad
+						var postContainer = post.closest(".occludable-update");
+						var promoted = $(postContainer).find(".feed-shared-actor__sub-description")
+						if (promoted.length > 0 && promoted[0].innerText == "Promoted") {
+							$("#selling-container-" + i).find(".selling-label-true").removeClass("hidden");
+							revealHideButtons(post);
+						} else {
+							$("#selling-container-" + i).find(".selling-label-false").removeClass("hidden");	
+						}
+						
 					}
 
 					
