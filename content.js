@@ -24,14 +24,32 @@ var sellingWords = [
 
 
 
-var detectBragging = function (text) {
+var detectBragging = function (text, callback) {
 	var textLower = text.toLowerCase();
-	for (let i = 0; i < braggingWords.length; i++) {
-		var braggingWord = braggingWords[i];
-		if (textLower.includes(braggingWord)) {
-			return true;
+	var url = "https://review-sentiment-analyzer-001.herokuapp.com/humblebrag/";
+	var data = JSON.stringify({
+		"text" : text
+	});
+	$.ajax({
+		type: "POST",
+		url: url,
+		data: data,
+		contentType: "application/json; charset=utf-8",
+		dataType:"json",
+		success: function(response) {
+			callback(response);
+		},
+		error: function(jqXHR, textStatus, errorThrown){ 
+			console.log(errorThrown);
 		}
-	}
+	})
+
+	// for (let i = 0; i < braggingWords.length; i++) {
+	// 	var braggingWord = braggingWords[i];
+	// 	if (textLower.includes(braggingWord)) {
+	// 		return true;
+	// 	}
+	// }
 }
 
 var detectSelling = function (text) {
@@ -71,6 +89,7 @@ function sendLabelledData(clientID, text, feedbackType, feedbackLabel, extension
 		type: "POST",
 		url: API_URL,
 		data: data,
+		contentType: "application/json",
 		success: function(data, status) {
 			console.log(status);
 		}
@@ -222,14 +241,25 @@ var labelPosts = function() {
 
 				if (texts.length > 0) {
 					var text = texts[0].innerText;
+
+					detectBragging(text, function(response) {
+						if (response.label == "Bragging") {
+							console.log(response);
+							$("#bragging-container-" + i).find(".bragging-label-true").removeClass("hidden");
+							revealHideButtons(post);
+						} else {
+							console.log(text + "\n\n was not bragging");
+							$("#bragging-container-" + i).find(".bragging-label-false").removeClass("hidden");
+						}
+					})
 					
-					if (detectBragging(text)) {
-						$("#bragging-container-" + i).find(".bragging-label-true").removeClass("hidden");
-						revealHideButtons(post);
+					// if (detectBragging(text)) {
+					// 	$("#bragging-container-" + i).find(".bragging-label-true").removeClass("hidden");
+					// 	revealHideButtons(post);
 						
-					} else {
-						$("#bragging-container-" + i).find(".bragging-label-false").removeClass("hidden");
-					}
+					// } else {
+					// 	$("#bragging-container-" + i).find(".bragging-label-false").removeClass("hidden");
+					// }
 
 					if (detectSelling(text)) {
 						$("#selling-container-" + i).find(".selling-label-true").removeClass("hidden");
