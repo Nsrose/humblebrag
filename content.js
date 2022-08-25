@@ -43,13 +43,6 @@ var detectBragging = function (text, callback) {
 			console.log(errorThrown);
 		}
 	})
-
-	// for (let i = 0; i < braggingWords.length; i++) {
-	// 	var braggingWord = braggingWords[i];
-	// 	if (textLower.includes(braggingWord)) {
-	// 		return true;
-	// 	}
-	// }
 }
 
 var detectSelling = function (text) {
@@ -244,11 +237,9 @@ var labelPosts = function() {
 
 					detectBragging(text, function(response) {
 						if (response.label == "Bragging") {
-							console.log(response);
 							$("#bragging-container-" + i).find(".bragging-label-true").removeClass("hidden");
 							revealHideButtons(post);
 						} else {
-							console.log(text + "\n\n was not bragging");
 							$("#bragging-container-" + i).find(".bragging-label-false").removeClass("hidden");
 						}
 					})
