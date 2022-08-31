@@ -236,7 +236,8 @@ var labelPosts = function() {
 					var text = texts[0].innerText;
 
 					detectBragging(text, function(response) {
-						if (response.label == "Bragging") {
+	
+						if (response.label.includes("bragging")) {
 							$("#bragging-container-" + i).find(".bragging-label-true").removeClass("hidden");
 							revealHideButtons(post);
 						} else {
@@ -252,21 +253,21 @@ var labelPosts = function() {
 					// 	$("#bragging-container-" + i).find(".bragging-label-false").removeClass("hidden");
 					// }
 
-					if (detectSelling(text)) {
-						$("#selling-container-" + i).find(".selling-label-true").removeClass("hidden");
-						revealHideButtons(post);
-					} else {
-						// Check if this is an ad
-						var postContainer = post.closest(".occludable-update");
-						var promoted = $(postContainer).find(".feed-shared-actor__sub-description")
-						if (promoted.length > 0 && promoted[0].innerText == "Promoted") {
-							$("#selling-container-" + i).find(".selling-label-true").removeClass("hidden");
-							revealHideButtons(post);
-						} else {
-							$("#selling-container-" + i).find(".selling-label-false").removeClass("hidden");	
-						}
+					// if (detectSelling(text)) {
+					// 	$("#selling-container-" + i).find(".selling-label-true").removeClass("hidden");
+					// 	revealHideButtons(post);
+					// } else {
+					// 	// Check if this is an ad
+					// 	var postContainer = post.closest(".occludable-update");
+					// 	var promoted = $(postContainer).find(".feed-shared-actor__sub-description")
+					// 	if (promoted.length > 0 && promoted[0].innerText == "Promoted") {
+					// 		$("#selling-container-" + i).find(".selling-label-true").removeClass("hidden");
+					// 		revealHideButtons(post);
+					// 	} else {
+					// 		$("#selling-container-" + i).find(".selling-label-false").removeClass("hidden");	
+					// 	}
 						
-					}
+					// }
 
 					
 					
