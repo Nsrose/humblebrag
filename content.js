@@ -24,8 +24,7 @@ var sellingWords = [
 
 
 
-var detectBragging = function (text, callback) {
-	var textLower = text.toLowerCase();
+var detectBragging = function (text, i, post, callback) {
 	var url = "https://review-sentiment-analyzer-001.herokuapp.com/humblebrag/";
 	var data = JSON.stringify({
 		"text" : text
@@ -37,7 +36,12 @@ var detectBragging = function (text, callback) {
 		contentType: "application/json; charset=utf-8",
 		dataType:"json",
 		success: function(response) {
-			callback(response);
+			if (response.label.includes("bragging")) {
+				$("#bragging-container-" + i).find(".bragging-label-true").removeClass("hidden");
+				revealHideButtons(post);
+			} else {
+				$("#bragging-container-" + i).find(".bragging-label-false").removeClass("hidden");
+			}
 		},
 		error: function(jqXHR, textStatus, errorThrown){ 
 			console.log(errorThrown);
@@ -172,10 +176,7 @@ var labelPosts = function() {
 				div.html($.parseHTML(data));
 				// add some IDs to this specific div
 				$(div).find(".bragging-container").attr("id", "bragging-container-" + i);
-				$(div).find(".selling-container").attr("id", "selling-container-" + i);
-
-	
-		
+				// $(div).find(".selling-container").attr("id", "selling-container-" + i);
 
 				// add functions
 				$(".feedback-element").unbind().click(function(data) {
@@ -230,48 +231,9 @@ var labelPosts = function() {
 				// Show the predicted labels for each type
 				var texts = post.getElementsByClassName("break-words");
 
-
-
 				if (texts.length > 0) {
 					var text = texts[0].innerText;
-
-					detectBragging(text, function(response) {
-	
-						if (response.label.includes("bragging")) {
-							$("#bragging-container-" + i).find(".bragging-label-true").removeClass("hidden");
-							revealHideButtons(post);
-						} else {
-							$("#bragging-container-" + i).find(".bragging-label-false").removeClass("hidden");
-						}
-					})
-					
-					// if (detectBragging(text)) {
-					// 	$("#bragging-container-" + i).find(".bragging-label-true").removeClass("hidden");
-					// 	revealHideButtons(post);
-						
-					// } else {
-					// 	$("#bragging-container-" + i).find(".bragging-label-false").removeClass("hidden");
-					// }
-
-					// if (detectSelling(text)) {
-					// 	$("#selling-container-" + i).find(".selling-label-true").removeClass("hidden");
-					// 	revealHideButtons(post);
-					// } else {
-					// 	// Check if this is an ad
-					// 	var postContainer = post.closest(".occludable-update");
-					// 	var promoted = $(postContainer).find(".feed-shared-actor__sub-description")
-					// 	if (promoted.length > 0 && promoted[0].innerText == "Promoted") {
-					// 		$("#selling-container-" + i).find(".selling-label-true").removeClass("hidden");
-					// 		revealHideButtons(post);
-					// 	} else {
-					// 		$("#selling-container-" + i).find(".selling-label-false").removeClass("hidden");	
-					// 	}
-						
-					// }
-
-					
-					
-
+					detectBragging(text, i, post);
 				}
 			}
 
